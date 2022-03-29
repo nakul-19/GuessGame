@@ -26,7 +26,7 @@ class MainViewModel : ViewModel() {
     private val mNum = MutableLiveData(3)
     val num: LiveData<Int> = mNum
 
-    private val mState = MutableLiveData(GameState.PLAYING)
+    private val mState = MutableLiveData(GameState.START)
     val state: LiveData<GameState> = mState
 
     init {
@@ -34,15 +34,19 @@ class MainViewModel : ViewModel() {
     }
 
     fun resetData() {
-        mState.postValue(GameState.PLAYING)
+        mState.postValue(GameState.START)
         chancesInt = 3
         mChances.value = chancesInt
         arrayList.clear()
         for (i in 1..9)
             arrayList.add(TileState(i, State.HIDDEN))
         arrayList.shuffle()
-        mNum.value = (1..9).random()
         mList.value = arrayList
+    }
+
+    fun selectNum(value: Int) {
+        mNum.value = value
+        mState.postValue(GameState.PLAYING)
     }
 
     fun clicked(ind: Int) {

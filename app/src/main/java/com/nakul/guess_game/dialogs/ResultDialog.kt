@@ -1,4 +1,4 @@
-package com.nakul.guess_game
+package com.nakul.guess_game.dialogs
 
 import android.app.Dialog
 import android.content.Context
@@ -19,6 +19,7 @@ class ResultDialog(context: Context, private val state: GameState, private val v
         super.onCreate(savedInstanceState)
         val binding = DialogResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        this.setCanceledOnTouchOutside(false)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         binding.textview.text = if (state == GameState.LOST) "Game lost!" else "You won!"
         binding.playAgainButton.setOnClickListener {

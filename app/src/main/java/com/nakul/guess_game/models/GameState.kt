@@ -5,5 +5,5 @@ package com.nakul.guess_game.models
  * on 29,March,2022
  */
 enum class GameState {
-    PLAYING, LOST, WON
+    START, PLAYING, LOST, WON
 }
