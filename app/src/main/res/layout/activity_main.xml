@@ -1,170 +1,200 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity">
+<layout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/title"
+    <data>
+
+        <variable
+            name="vm"
+            type="com.nakul.guess_game.viewmodel.MainViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="28dp"
-        android:fontFamily="@font/open_sans_bold"
-        android:gravity="center"
-        android:text="GUESS GAME"
-        android:textColor="@color/yellow"
-        android:textSize="36sp"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/findText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/open_sans"
-        android:gravity="center"
-        android:text="Find 6 in tiles below"
-        android:textColor="@color/yellow"
-        android:textSize="24sp"
-        app:layout_constraintTop_toBottomOf="@id/title" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/open_sans_bold"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/yellow"
+            android:textSize="36sp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:textAllCaps="true" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/chancesText"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:fontFamily="@font/open_sans_semi_bold"
-        android:gravity="center_vertical|end"
-        android:paddingHorizontal="8dp"
-        android:text="Chances left: 3"
-        android:textColor="@color/yellow"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="@+id/gridLayout"
-        app:layout_constraintStart_toStartOf="@+id/gridLayout"
-        app:layout_constraintTop_toBottomOf="@id/findText" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/findText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:gravity="center"
+            android:text="@{`Find ` + String.valueOf(vm.num) + ` in tiles below`}"
+            android:textColor="@color/yellow"
+            android:textSize="24sp"
+            app:layout_constraintTop_toBottomOf="@id/title" />
 
-    <GridLayout
-        android:id="@+id/gridLayout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_margin="32dp"
-        android:columnCount="3"
-        app:layout_constraintBottom_toTopOf="@id/resetButton"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chancesText"
-        tools:layout_editor_absoluteX="8dp">
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chancesText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center_vertical|end"
+            android:paddingHorizontal="8dp"
+            android:text="@{`Chances left: `+ String.valueOf(vm.chances)}"
+            android:textColor="@color/yellow"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="@+id/gridLayout"
+            app:layout_constraintStart_toStartOf="@+id/gridLayout"
+            app:layout_constraintTop_toBottomOf="@id/findText" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile1"
-            style="@style/TileStyle"
+        <GridLayout
+            android:id="@+id/gridLayout"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            android:layout_margin="32dp"
+            android:columnCount="3"
+            app:layout_constraintBottom_toTopOf="@id/resetButton"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chancesText"
+            tools:layout_editor_absoluteX="8dp">
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile2"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile1"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(0)}"
+                app:bindTo="@{vm.list.get(0)}" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile3"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile2"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(1)}"
+                app:bindTo="@{vm.list.get(1)}" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile4"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile3"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(2)}"
+                app:bindTo="@{vm.list.get(2)}" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile5"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile4"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(3)}"
+                app:bindTo="@{vm.list.get(3)}" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile6"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile5"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(4)}"
+                app:bindTo="@{vm.list.get(4)}" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile7"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile6"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(5)}"
+                app:bindTo="@{vm.list.get(5)}" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile8"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile7"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(6)}"
+                app:bindTo="@{vm.list.get(6)}" />
 
-        <com.nakul.guess_game.views.Tile
-            android:id="@+id/tile9"
-            style="@style/TileStyle"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_rowWeight="1"
-            android:layout_columnWeight="1"
-            android:layout_gravity="fill"
-            android:layout_margin="8dp" />
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile8"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(7)}"
+                app:bindTo="@{vm.list.get(7)}" />
 
-    </GridLayout>
+            <com.nakul.guess_game.views.Tile
+                android:id="@+id/tile9"
+                style="@style/TileStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:layout_margin="8dp"
+                android:onClick="@{()->vm.clicked(8)}"
+                app:bindTo="@{vm.list.get(8)}" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/resetButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="56dp"
-        android:layout_marginBottom="48dp"
-        android:background="@drawable/shown_tile"
-        android:fontFamily="@font/open_sans_semi_bold"
-        android:gravity="center"
-        android:paddingVertical="6dp"
-        android:text="RESET"
-        android:textColor="@color/yellow"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        </GridLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/resetButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="56dp"
+            android:layout_marginBottom="48dp"
+            android:background="@drawable/shown_tile"
+            android:fontFamily="@font/open_sans_semi_bold"
+            android:gravity="center"
+            android:onClick="@{()->vm.resetData()}"
+            android:paddingVertical="6dp"
+            android:text="@string/reset"
+            android:textColor="@color/yellow"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -8,6 +8,7 @@ import android.util.AttributeSet
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.databinding.BindingAdapter
 import com.nakul.guess_game.R
 import com.nakul.guess_game.models.State
 import com.nakul.guess_game.models.TileState
@@ -19,7 +20,9 @@ import com.nakul.guess_game.models.TileState
  */
 class Tile : AppCompatTextView {
 
-    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs, R.style.TileStyle) {
+    constructor(context: Context, attrs: AttributeSet? = null) : super(
+        context, attrs, R.style.TileStyle
+    ) {
         initView(context, attrs)
     }
 
@@ -32,8 +35,8 @@ class Tile : AppCompatTextView {
         initView(context, null)
     }
 
-    private var num: Int? = null
-    private var state: TileState? = null
+    var num: Int? = null
+    var state: TileState? = null
 
     private fun initView(context: Context, attrs: AttributeSet?) {
         val ta = context.obtainStyledAttributes(attrs, R.styleable.Tile, 0, 0)
@@ -45,18 +48,7 @@ class Tile : AppCompatTextView {
         }
     }
 
-    fun bind(value: TileState) {
-        num = value.num
-        if (state?.state == State.HIDDEN && value.state == State.SHOWN) {
-            animateShowing()
-            state = value
-        } else {
-            state = value
-            setHidden(value.state == State.HIDDEN)
-        }
-    }
-
-    private fun animateShowing() {
+    fun animateShowing() {
         val oa1 = ObjectAnimator.ofFloat(this, "scaleX", 1f, 0f)
         val oa2 = ObjectAnimator.ofFloat(this, "scaleX", 0f, 1f)
         oa1.interpolator = DecelerateInterpolator()
@@ -73,9 +65,21 @@ class Tile : AppCompatTextView {
         oa1.start()
     }
 
-    private fun setHidden(value: Boolean) {
+    fun setHidden(value: Boolean) {
         setBackgroundResource(if (value) R.drawable.hidden_tile else R.drawable.shown_tile)
         text = if (value) "" else num.toString()
     }
 
+}
+
+@BindingAdapter("app:bindTo")
+fun bind(tile: Tile, value: TileState) {
+    tile.num = value.num
+    if (tile.state?.state == State.HIDDEN && value.state == State.SHOWN) {
+        tile.animateShowing()
+        tile.state = value
+    } else {
+        tile.state = value
+        tile.setHidden(value.state == State.HIDDEN)
+    }
 }
